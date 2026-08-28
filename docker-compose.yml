@@ -1,0 +1,54 @@
+services:
+  # MySQL Database Service
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: logindb
+      MYSQL_USER: loginuser
+      MYSQL_PASSWORD: loginpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-network
+
+  # Node.js Web Application Service
+  web-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: login-web-app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_USER: loginuser
+      DB_PASSWORD: loginpassword
+      DB_NAME: logindb
+      SESSION_SECRET: dev-secret-key-change-in-production
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

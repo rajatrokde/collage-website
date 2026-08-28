@@ -1,0 +1,13 @@
+# Select Cloud Provider: "aws", "azure", "gcp", or "generic_k8s" (default: generic_k8s)
+cloud_provider = "generic_k8s"
+
+# Cluster Configuration
+cluster_name  = "aitae-k8s-cluster"
+region        = "us-east-1"
+node_count    = 2
+instance_type = "t3.medium"
+
+# Application Settings
+app_namespace  = "aitae-portal"
+db_password    = "SecureRootPassword2026!"
+session_secret = "k8s-production-super-secret-session-key"

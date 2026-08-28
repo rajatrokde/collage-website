@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AITAE Enterprise ERP & Student Portal - Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="top-inst-bar">
+    <div class="accreditations">
+      <span class="badge-accred">NAAC 'A++' GRADE (3.82 CGPA)</span>
+      <span class="badge-accred">NBA ACCREDITED</span>
+      <span class="badge-accred">NIRF ENGG #12</span>
+      <span class="badge-accred">AICTE AUTONOMOUS</span>
+    </div>
+    <div class="quick-contacts">
+      <span><i class="fa-solid fa-phone"></i> Academic Helpline: 1800-419-AITAE</span>
+      <a href="https://ieee.org" target="_blank"><i class="fa-solid fa-book-bookmark"></i> IEEE Digital Library</a>
+      <a href="#" onclick="openModal('policyModal')"><i class="fa-solid fa-shield-halved"></i> IT Security Policy</a>
+    </div>
+  </div>
+
+  <!-- Breaking Circulars Marquee -->
+  <div class="notice-ticker-bar">
+    <div class="ticker-label"><i class="fa-solid fa-bolt"></i> Notice Ticker</div>
+    <div class="ticker-content">
+      <div class="ticker-text">
+        <span><i class="fa-solid fa-circle-exclamation text-red"></i> <strong>End-Semester Exams 2026:</strong> Hall Tickets available for B.Tech Semesters II, IV, VI &amp; VIII.</span>
+        <span><i class="fa-solid fa-briefcase text-gold"></i> <strong>Campus Placements:</strong> Google, Microsoft, NVIDIA, Amazon on-campus drives registration closing soon.</span>
+        <span><i class="fa-solid fa-trophy text-cyan"></i> <strong>Smart India Hackathon 2026:</strong> Internal shortlist announced for Innovation Bootcamp.</span>
+        <span><i class="fa-solid fa-building-columns"></i> <strong>Fee Payment:</strong> Even Semester 2025–2026 Tuition Fee payment window open without late fee.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main College Brand Header -->
+  <header class="college-main-header">
+    <div class="brand-wrapper">
+      <div class="college-crest-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="brand-text">
+        <h1>APEX INSTITUTE OF TECHNOLOGY & ADVANCED ENGINEERING</h1>
+        <p>Autonomous Institute | Affiliated to National Technical University | Estd. 1984</p>
+      </div>
+    </div>
+    <div class="header-status-pills">
+      <div class="status-pill">
+        <div class="status-dot"></div>
+        <span>ERP Cloud System: Operational</span>
+      </div>
+      <div class="status-pill">
+        <i class="fa-solid fa-calendar-day text-gold"></i>
+        <span>AY 2025–2026 (Even Semester)</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Authentication Page Body -->
+  <main class="auth-page-wrapper">
+    
+    <!-- Left: Campus Life & Highlights Showcase -->
+    <section class="campus-showcase-card">
+      <div class="showcase-hero">
+        <h2>Integrated Academic &amp; Research ERP Portal</h2>
+        <p>Access your real-time academic transcripts, live attendance tracker, laboratory slots, on-campus placement drives, hostel gate passes, and digital courseware.</p>
+      </div>
+
+      <div class="highlights-grid">
+        <div class="highlight-box">
+          <div class="num">100%</div>
+          <div class="desc">Autonomous Curriculum Aligned with ABET &amp; Industry 4.0</div>
+        </div>
+        <div class="highlight-box">
+          <div class="num">₹48 LPA</div>
+          <div class="desc">Highest Campus Placement CTC (AY 2025–26)</div>
+        </div>
+        <div class="highlight-box">
+          <div class="num">150+</div>
+          <div class="desc">Hi-Tech Labs &amp; NVIDIA AI Center of Excellence</div>
+        </div>
+        <div class="highlight-box">
+          <div class="num">50,000+</div>
+          <div class="desc">Global Alumni Network Across Fortune 500</div>
+        </div>
+      </div>
+
+      <div class="bulletin-feed-title">
+        <i class="fa-solid fa-bullhorn text-gold"></i> Official Campus Circulars
+      </div>
+
+      <div class="bulletin-list">
+        <div class="bulletin-item urgent">
+          <div class="meta">
+            <span class="tag">Examination</span>
+            <span>25 Aug 2026</span>
+          </div>
+          <div>B.Tech Sem VI End-Semester Exam Schedule &amp; Lab Practical dates released.</div>
+        </div>
+        <div class="bulletin-item">
+          <div class="meta">
+            <span class="tag">Placement</span>
+            <span>24 Aug 2026</span>
+          </div>
+          <div>Google &amp; NVIDIA Campus Recruitment Drive 2026 - Online assessment slots open.</div>
+        </div>
+        <div class="bulletin-item">
+          <div class="meta">
+            <span class="tag">Library</span>
+            <span>20 Aug 2026</span>
+          </div>
+          <div>IEEE Xplore, ScienceDirect, and ACM Digital Library remote VPN access updated.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: Authentication Card -->
+    <section class="portal-card">
+      <div class="portal-header">
+        <h2>Single Sign-On (SSO) Portal</h2>
+        <p>Select your user category to authenticate</p>
+      </div>
+
+      <!-- Role Tabs -->
+      <div class="role-tabs">
+        <button type="button" class="role-tab-btn active" data-role="student" onclick="setRole('student')">
+          <span class="role-icon"><i class="fa-solid fa-user-graduate"></i></span>
+          <span>Student</span>
+        </button>
+        <button type="button" class="role-tab-btn" data-role="faculty" onclick="setRole('faculty')">
+          <span class="role-icon"><i class="fa-solid fa-chalkboard-user"></i></span>
+          <span>Faculty</span>
+        </button>
+        <button type="button" class="role-tab-btn" data-role="admin" onclick="setRole('admin')">
+          <span class="role-icon"><i class="fa-solid fa-user-shield"></i></span>
+          <span>Dean/Admin</span>
+        </button>
+        <button type="button" class="role-tab-btn" data-role="parent" onclick="setRole('parent')">
+          <span class="role-icon"><i class="fa-solid fa-people-roof"></i></span>
+          <span>Parent</span>
+        </button>
+      </div>
+
+      <!-- Quick 1-Click Demo Accounts Bar -->
+      <div class="demo-accounts-bar">
+        <div class="demo-title">
+          <span><i class="fa-solid fa-wand-magic-sparkles"></i> Instant 1-Click Demo Login</span>
+          <span style="font-size: 0.68rem; color: var(--text-muted); font-weight: normal;">Auto-fills &amp; Signs In</span>
+        </div>
+        <div class="demo-buttons-grid">
+          <button type="button" class="btn-demo-quick" onclick="quickDemoLogin('student')">
+            <span>🎓 Aarav (B.Tech CSE)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button type="button" class="btn-demo-quick" onclick="quickDemoLogin('faculty')">
+            <span>👨‍🏫 Dr. Ramanujan (Faculty)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button type="button" class="btn-demo-quick" onclick="quickDemoLogin('admin')">
+            <span>🛡️ Dean Murthy (Admin)</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <button type="button" class="btn-demo-quick" onclick="quickDemoLogin('parent')">
+            <span>👨‍👩‍👧 Parent Portal</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Alert Box -->
+      <div id="alertBox" class="portal-alert"></div>
+
+      <!-- Login Form -->
+      <form id="collegeLoginForm">
+        <div class="form-group">
+          <label id="userIdentifierLabel" for="username">University Roll No / PRN</label>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-id-card input-icon"></i>
+            <input type="text" id="username" name="username" placeholder="e.g. 2023BCSE0842 or email" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label for="password" style="margin-bottom: 0;">Institutional Password</label>
+            <a href="#" onclick="openModal('forgotModal')" style="font-size: 0.75rem; color: var(--accent-gold); text-decoration: none;">Forgot Password?</a>
+          </div>
+          <div class="input-with-icon">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="password" name="password" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+        </div>
+
+        <!-- Dynamic Security Captcha -->
+        <div class="captcha-container">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <div id="captchaCode" class="captcha-badge">8X4K9</div>
+            <button type="button" class="btn-refresh-captcha" onclick="refreshCaptcha()" title="Regenerate Captcha">
+              <i class="fa-solid fa-arrows-rotate"></i>
+            </button>
+          </div>
+          <input type="text" id="captchaInput" class="form-control captcha-input" placeholder="Captcha" maxlength="5" required>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="btn-portal-primary">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          <span>Sign In to ERP Portal</span>
+        </button>
+      </form>
+
+      <!-- Portal Footer Links -->
+      <div class="portal-footer-links">
+        <span>New Admission / Student? <a href="register.html">Register for ERP</a></span>
+        <a href="#" onclick="openModal('helpdeskModal')"><i class="fa-solid fa-headset"></i> IT Helpdesk</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal: IT Security & Acceptable Use Policy -->
+  <div id="policyModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-shield-halved text-gold"></i> AITAE IT &amp; Security Policy</h3>
+        <button class="btn-close-modal" onclick="closeModal('policyModal')">&times;</button>
+      </div>
+      <div style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+        <p><strong>1. Access Confidentiality:</strong> Your university credentials provide authorized access to confidential academic records, grading databases, and institutional network systems. Sharing credentials is a violation of the Institute IT Code.</p>
+        <br>
+        <p><strong>2. Academic Integrity:</strong> Misuse of examination portals, automated bots, or spoofed attendance requests will result in disciplinary action under the Autonomous Disciplinary Board.</p>
+        <br>
+        <p><strong>3. 24x7 Security Monitoring:</strong> All sign-ins, IP addresses, and digital transactions are cryptographically logged for security auditing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Forgot Password / Roll No Assistant -->
+  <div id="forgotModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-key text-gold"></i> Account Recovery Assistant</h3>
+        <button class="btn-close-modal" onclick="closeModal('forgotModal')">&times;</button>
+      </div>
+      <div style="color: var(--text-secondary); font-size: 0.88rem;">
+        <p style="margin-bottom: 14px;">Enter your registered institutional email or Mobile Number. An OTP &amp; reset link will be dispatched immediately.</p>
+        <div class="form-group">
+          <label>Registered Email</label>
+          <input type="email" id="recoveryEmail" class="form-control" placeholder="aarav.sharma@aitae.edu.in">
+        </div>
+        <button type="button" class="btn-portal-primary" onclick="alert('Recovery link sent to your registered institutional email!')">
+          Send Recovery Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: IT Helpdesk Contact -->
+  <div id="helpdeskModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-headset text-gold"></i> Campus ERP Helpdesk</h3>
+        <button class="btn-close-modal" onclick="closeModal('helpdeskModal')">&times;</button>
+      </div>
+      <div style="color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+        <p><strong>Central Computing Center (CCC):</strong> Ground Floor, Ramanujan Block</p>
+        <p><strong>Email Support:</strong> erp-support@aitae.edu.in</p>
+        <p><strong>Phone Support:</strong> +91 (080) 2894-4000 (Extn: 402/403)</p>
+        <p><strong>Working Hours:</strong> Mon - Sat: 8:30 AM to 6:00 PM</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentRole = 'student';
+    let generatedCaptcha = '';
+
+    const alertBox = document.getElementById('alertBox');
+    const loginForm = document.getElementById('collegeLoginForm');
+    const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+    const userIdentifierLabel = document.getElementById('userIdentifierLabel');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+    const captchaCodeEl = document.getElementById('captchaCode');
+    const captchaInput = document.getElementById('captchaInput');
+
+    function refreshCaptcha() {
+      const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+      let code = '';
+      for (let i = 0; i < 5; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      generatedCaptcha = code;
+      captchaCodeEl.textContent = code;
+      captchaInput.value = '';
+    }
+
+    refreshCaptcha();
+
+    function setRole(role) {
+      currentRole = role;
+      document.querySelectorAll('.role-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-role') === role);
+      });
+
+      if (role === 'student') {
+        userIdentifierLabel.textContent = 'University Roll No / PRN';
+        usernameInput.placeholder = 'e.g. 2023BCSE0842';
+      } else if (role === 'faculty') {
+        userIdentifierLabel.textContent = 'Faculty / Employee ID';
+        usernameInput.placeholder = 'e.g. FAC-CSE-4092';
+      } else if (role === 'admin') {
+        userIdentifierLabel.textContent = 'Admin / Dean Pass-ID';
+        usernameInput.placeholder = 'e.g. admin or ADM-HQ-101';
+      } else if (role === 'parent') {
+        userIdentifierLabel.textContent = 'Student PRN / Parent User';
+        usernameInput.placeholder = 'e.g. PARENT-842 or 2023BCSE0842';
+      }
+    }
+
+    function showAlert(msg, isSuccess = false) {
+      alertBox.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> <span>${msg}</span>`;
+      alertBox.className = `portal-alert ${isSuccess ? 'success' : 'error'}`;
+    }
+
+    function clearAlert() {
+      alertBox.style.display = 'none';
+      alertBox.className = 'portal-alert';
+    }
+
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    // Check if session already authenticated
+    fetch('/api/user')
+      .then(res => res.json())
+      .then(data => {
+        if (data.authenticated) {
+          window.location.href = 'dashboard.html';
+        }
+      })
+      .catch(() => {});
+
+    // Instant One-Click Demo Login
+    async function quickDemoLogin(role) {
+      clearAlert();
+      showAlert(`Logging into official ${role.toUpperCase()} portal...`, true);
+      
+      try {
+        const response = await fetch('/api/demo-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ role })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+          showAlert(`Welcome, ${data.user.full_name}! Redirecting to ERP Dashboard...`, true);
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 600);
+        } else {
+          showAlert(data.message || 'Demo login failed.');
+        }
+      } catch (err) {
+        showAlert('Network communication error. Please try again.');
+      }
+    }
+
+    // Standard Form Login
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value;
+      const captchaEntered = captchaInput.value.trim().toUpperCase();
+
+      if (!username || !password) {
+        showAlert('Please enter both identifier and password.');
+        return;
+      }
+
+      if (captchaEntered !== generatedCaptcha) {
+        showAlert('Invalid captcha security code. Please check and re-enter.');
+        refreshCaptcha();
+        return;
+      }
+
+      loginSubmitBtn.disabled = true;
+      loginSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Verifying Credentials...</span>';
+
+      try {
+        const response = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password, role: currentRole })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showAlert(data.message || 'Authentication successful! Loading Academic Dashboard...', true);
+          setTimeout(() => {
+            window.location.href = 'dashboard.html';
+          }, 700);
+        } else {
+          showAlert(data.message || 'Invalid credentials. Please verify your Roll No / Password.');
+          loginSubmitBtn.disabled = false;
+          loginSubmitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>Sign In to ERP Portal</span>';
+          refreshCaptcha();
+        }
+      } catch (err) {
+        showAlert('Server connection error. Please try again later.');
+        loginSubmitBtn.disabled = false;
+        loginSubmitBtn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> <span>Sign In to ERP Portal</span>';
+      }
+    });
+  </script>
+</body>
+</html>

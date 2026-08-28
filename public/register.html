@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AITAE Student Enrollment & ERP Registration</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="top-inst-bar">
+    <div class="accreditations">
+      <span class="badge-accred">NEW ADMISSIONS 2026–2027</span>
+      <span class="badge-accred">NAAC 'A++' GRADE</span>
+      <span class="badge-accred">NBA ACCREDITED</span>
+    </div>
+    <div class="quick-contacts">
+      <span><i class="fa-solid fa-phone"></i> Admissions Office: 1800-419-AITAE</span>
+      <span><i class="fa-solid fa-envelope"></i> admissions@aitae.edu.in</span>
+    </div>
+  </div>
+
+  <!-- Main College Brand Header -->
+  <header class="college-main-header">
+    <div class="brand-wrapper">
+      <div class="college-crest-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="brand-text">
+        <h1>APEX INSTITUTE OF TECHNOLOGY & ADVANCED ENGINEERING</h1>
+        <p>Student Onboarding &amp; Academic ERP Registration</p>
+      </div>
+    </div>
+    <div class="header-status-pills">
+      <div class="status-pill">
+        <div class="status-dot"></div>
+        <span>Admissions Portal Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Layout -->
+  <main class="auth-page-wrapper" style="max-width: 900px; grid-template-columns: 1fr;">
+    <section class="portal-card" style="max-width: 800px; margin: 0 auto; width: 100%;">
+      <div class="portal-header">
+        <h2>Student ERP Account Creation</h2>
+        <p>Register your official university profile to access your semester courses, attendance, and exam portal</p>
+      </div>
+
+      <!-- Alert Box -->
+      <div id="alertBox" class="portal-alert"></div>
+
+      <!-- Registration Form -->
+      <form id="collegeRegisterForm">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="fullName">Full Name (As per 10th/12th Certificate)</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-user input-icon"></i>
+              <input type="text" id="fullName" name="fullName" placeholder="e.g. Rohan V. Deshmukh" required autocomplete="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Official / Personal Email Address</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-envelope input-icon"></i>
+              <input type="email" id="email" name="email" placeholder="rohan.deshmukh@gmail.com" required autocomplete="email">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="department">Engineering Department / Branch</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-microchip input-icon"></i>
+              <select id="department" name="department" class="form-control" style="padding-left: 42px;">
+                <option value="Computer Science & Engineering">Computer Science &amp; Engineering (CSE)</option>
+                <option value="Artificial Intelligence & Data Science">Artificial Intelligence &amp; Data Science (AI&amp;DS)</option>
+                <option value="Electronics & Communication Engineering">Electronics &amp; Communication (ECE)</option>
+                <option value="Robotics & Automation">Robotics &amp; Automation Engineering</option>
+                <option value="Mechanical & Mechatronics">Mechanical &amp; Mechatronics Engineering</option>
+                <option value="Electrical & Electronics Engineering">Electrical &amp; Electronics Engineering (EEE)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="degree">Degree Program</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-award input-icon"></i>
+              <select id="degree" name="degree" class="form-control" style="padding-left: 42px;">
+                <option value="B.Tech">Bachelor of Technology (B.Tech 4-Year)</option>
+                <option value="M.Tech">Master of Technology (M.Tech 2-Year)</option>
+                <option value="Dual Degree">Dual Degree (B.Tech + M.Tech 5-Year)</option>
+                <option value="Ph.D.">Doctor of Philosophy (Ph.D. Engineering)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="rollNumber">Application ID / University PRN (Optional)</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-id-badge input-icon"></i>
+              <input type="text" id="rollNumber" name="rollNumber" placeholder="Leave empty for auto-generation">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="semester">Current Admission Semester</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-layer-group input-icon"></i>
+              <select id="semester" name="semester" class="form-control" style="padding-left: 42px;">
+                <option value="1">Semester I (First Year)</option>
+                <option value="2">Semester II (First Year)</option>
+                <option value="3">Semester III (Second Year)</option>
+                <option value="4">Semester IV (Second Year)</option>
+                <option value="5">Semester V (Third Year)</option>
+                <option value="6" selected>Semester VI (Third Year)</option>
+                <option value="7">Semester VII (Final Year)</option>
+                <option value="8">Semester VIII (Final Year)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="password">Create Secure ERP Password</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="password" name="password" placeholder="Min. 6 characters" required autocomplete="new-password">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-shield-check input-icon"></i>
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter password" required autocomplete="new-password">
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(8,14,26,0.6); padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 0.8rem; color: var(--text-secondary); border: 1px solid var(--border-color);">
+          <i class="fa-solid fa-info-circle text-gold"></i> By registering, you agree to abide by the university's academic honor code, anti-ragging policies, and IT network usage guidelines.
+        </div>
+
+        <button type="submit" id="registerSubmitBtn" class="btn-portal-primary">
+          <i class="fa-solid fa-user-plus"></i>
+          <span>Complete Enrollment &amp; Register</span>
+        </button>
+      </form>
+
+      <div class="portal-footer-links">
+        <span>Already enrolled in ERP? <a href="index.html">Sign In Here</a></span>
+        <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Main Portal</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const alertBox = document.getElementById('alertBox');
+    const registerForm = document.getElementById('collegeRegisterForm');
+    const registerSubmitBtn = document.getElementById('registerSubmitBtn');
+
+    function showAlert(msg, isSuccess = false) {
+      alertBox.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> <span>${msg}</span>`;
+      alertBox.className = `portal-alert ${isSuccess ? 'success' : 'error'}`;
+    }
+
+    function clearAlert() {
+      alertBox.style.display = 'none';
+      alertBox.className = 'portal-alert';
+    }
+
+    registerForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearAlert();
+
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const department = document.getElementById('department').value;
+      const degree = document.getElementById('degree').value;
+      const rollNumber = document.getElementById('rollNumber').value.trim();
+      const semester = document.getElementById('semester').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!fullName || !email || !password) {
+        showAlert('Please fill in all mandatory fields.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showAlert('Passwords do not match. Please verify.');
+        return;
+      }
+
+      if (password.length < 6) {
+        showAlert('Password must be at least 6 characters long.');
+        return;
+      }
+
+      registerSubmitBtn.disabled = true;
+      registerSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Enrolling Student in ERP...</span>';
+
+      try {
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: fullName,
+            email,
+            department,
+            degree,
+            roll_number: rollNumber,
+            semester,
+            password
+          })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          showAlert(data.message, true);
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 1800);
+        } else {
+          showAlert(data.message || 'Enrollment registration failed.');
+          registerSubmitBtn.disabled = false;
+          registerSubmitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> <span>Complete Enrollment &amp; Register</span>';
+        }
+      } catch (err) {
+        showAlert('Network error. Please try again later.');
+        registerSubmitBtn.disabled = false;
+        registerSubmitBtn.innerHTML = '<i class="fa-solid fa-user-plus"></i> <span>Complete Enrollment &amp; Register</span>';
+      }
+    });
+  </script>
+</body>
+</html>

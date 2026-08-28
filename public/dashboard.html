@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AITAE Academic ERP - Integrated Student & Faculty Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="top-inst-bar">
+    <div class="accreditations">
+      <span class="badge-accred">AITAE AUTONOMOUS ERP</span>
+      <span class="badge-accred" id="topNavSessionBadge">AY 2025–2026 EVEN SEMESTER</span>
+      <span class="badge-accred" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border-color: rgba(16, 185, 129, 0.4);">
+        <i class="fa-solid fa-circle-check"></i> ACTIVE ENROLLMENT
+      </span>
+    </div>
+    <div class="quick-contacts">
+      <span id="liveClockDisplay"><i class="fa-regular fa-clock"></i> Loading Clock...</span>
+      <span><i class="fa-solid fa-server"></i> Server: Online</span>
+    </div>
+  </div>
+
+  <!-- Dashboard Top Header Bar -->
+  <header class="college-main-header">
+    <div class="brand-wrapper">
+      <div class="college-crest-icon">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="brand-text">
+        <h1 style="font-size: 1.2rem;">APEX INSTITUTE OF TECHNOLOGY & ADVANCED ENGINEERING</h1>
+        <p>Integrated Academic Management &amp; Enterprise ERP</p>
+      </div>
+    </div>
+    
+    <div class="header-status-pills">
+      <div class="status-pill" style="cursor: pointer;" onclick="switchTab('noticesTab')">
+        <i class="fa-solid fa-bell text-gold"></i>
+        <span>Notifications (4 New)</span>
+      </div>
+      <div class="status-pill" id="userTopBadge">
+        <div class="status-dot"></div>
+        <span id="topUserDisplayName">Loading...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Layout -->
+  <div class="dashboard-page-container">
+    
+    <!-- Left Navigation Sidebar -->
+    <aside class="dashboard-sidebar">
+      <div class="user-mini-profile">
+        <img id="sidebarAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="Avatar" class="user-avatar-img">
+        <div class="user-mini-details">
+          <h4 id="sidebarName">Aarav Sharma</h4>
+          <p id="sidebarRoll">2023BCSE0842</p>
+          <span id="sidebarRoleTag" class="user-role-tag">Student</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav-menu">
+        <button type="button" class="nav-item-btn active" onclick="switchTab('overviewTab')">
+          <span class="nav-icon"><i class="fa-solid fa-chart-pie text-gold"></i></span>
+          <span>Overview</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('coursesTab')">
+          <span class="nav-icon"><i class="fa-solid fa-book-open text-cyan"></i></span>
+          <span>Courses &amp; Syllabus</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('timetableTab')">
+          <span class="nav-icon"><i class="fa-solid fa-calendar-days text-purple"></i></span>
+          <span>Class Timetable</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('attendanceTab')">
+          <span class="nav-icon"><i class="fa-solid fa-user-check text-green"></i></span>
+          <span>Attendance Tracker</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('gradesTab')">
+          <span class="nav-icon"><i class="fa-solid fa-file-waveform text-gold"></i></span>
+          <span>Exams &amp; Grade Card</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('placementsTab')">
+          <span class="nav-icon"><i class="fa-solid fa-briefcase text-cyan"></i></span>
+          <span>Campus Placements</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('feesTab')">
+          <span class="nav-icon"><i class="fa-solid fa-credit-card text-green"></i></span>
+          <span>Fee Dues &amp; Receipts</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('libraryTab')">
+          <span class="nav-icon"><i class="fa-solid fa-book-bookmark text-gold"></i></span>
+          <span>Digital Library</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('hostelTab')">
+          <span class="nav-icon"><i class="fa-solid fa-hotel text-purple"></i></span>
+          <span>Hostel &amp; Gate Pass</span>
+        </button>
+
+        <button type="button" class="nav-item-btn" onclick="switchTab('noticesTab')">
+          <span class="nav-icon"><i class="fa-solid fa-bullhorn text-red"></i></span>
+          <span>Campus Notices</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button type="button" class="btn-logout-sidebar" onclick="performLogout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Sign Out ERP</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main-body">
+      
+      <!-- Top Action Bar -->
+      <div class="dashboard-topbar">
+        <div>
+          <h2 id="sectionTitle">Academic Overview</h2>
+          <p id="sectionSubtitle">Department of Computer Science &amp; Engineering | B.Tech Semester VI</p>
+        </div>
+        <div class="dashboard-action-pills">
+          <button class="btn-pill-action" onclick="printOfficialTranscript()">
+            <i class="fa-solid fa-print"></i>
+            <span>Print Grade Card</span>
+          </button>
+          <button class="btn-pill-action" onclick="openGatePassModal()">
+            <i class="fa-solid fa-qrcode text-gold"></i>
+            <span>New Gate Pass</span>
+          </button>
+          <button class="btn-pill-action" onclick="window.location.href='index.html'">
+            <i class="fa-solid fa-repeat"></i>
+            <span>Switch Role</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 1: OVERVIEW TAB
+           ================================================================ -->
+      <div id="overviewTab" class="dashboard-tab-content">
+        <!-- 4 Key Stat Metric Cards -->
+        <div class="stats-cards-grid">
+          <div class="stat-metric-card">
+            <div class="stat-header">
+              <span class="stat-title">Cumulative CGPA</span>
+              <div class="stat-icon-wrapper"><i class="fa-solid fa-award"></i></div>
+            </div>
+            <div class="stat-value" id="statCGPA">9.14 <span style="font-size: 1rem; color: var(--text-muted);">/ 10</span></div>
+            <div class="stat-sub"><span class="badge-tag-good"><i class="fa-solid fa-arrow-trend-up"></i> Top 2%</span> in CSE Dept</div>
+          </div>
+
+          <div class="stat-metric-card">
+            <div class="stat-header">
+              <span class="stat-title">Overall Attendance</span>
+              <div class="stat-icon-wrapper" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-green);"><i class="fa-solid fa-clipboard-user"></i></div>
+            </div>
+            <div class="stat-value" id="statAttendance">88.4%</div>
+            <div class="stat-sub"><span class="badge-tag-good"><i class="fa-solid fa-shield-check"></i> Safe</span> (>75% mandatory threshold)</div>
+          </div>
+
+          <div class="stat-metric-card">
+            <div class="stat-header">
+              <span class="stat-title">Degree Credits</span>
+              <div class="stat-icon-wrapper" style="background: rgba(14, 165, 233, 0.15); color: var(--accent-cyan);"><i class="fa-solid fa-layer-group"></i></div>
+            </div>
+            <div class="stat-value">132 <span style="font-size: 1rem; color: var(--text-muted);">/ 160</span></div>
+            <div class="stat-sub">82.5% Degree Requirements Completed</div>
+          </div>
+
+          <div class="stat-metric-card">
+            <div class="stat-header">
+              <span class="stat-title">Placement Status</span>
+              <div class="stat-icon-wrapper" style="background: rgba(139, 92, 246, 0.15); color: var(--accent-purple);"><i class="fa-solid fa-laptop-code"></i></div>
+            </div>
+            <div class="stat-value" style="font-size: 1.4rem;">Tier-1 Shortlisted</div>
+            <div class="stat-sub"><span class="badge-tag-good">2 Active Drives</span> (Google, NVIDIA)</div>
+          </div>
+        </div>
+
+        <!-- 2 Column Grid for Timetable Preview & Course Status -->
+        <div class="dashboard-grid-2col">
+          <!-- Enrolled Courses Quick Summary -->
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3><i class="fa-solid fa-book-bookmark text-gold"></i> Registered Semester Courses</h3>
+              <button class="btn-pill-action" style="padding: 4px 12px; font-size: 0.75rem;" onclick="switchTab('coursesTab')">View All</button>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="academic-table">
+                <thead>
+                  <tr>
+                    <th>Code</th>
+                    <th>Course Title</th>
+                    <th>Credits</th>
+                    <th>Faculty</th>
+                    <th>Attendance</th>
+                  </tr>
+                </thead>
+                <tbody id="overviewCoursesTableBody">
+                  <!-- Populated dynamically via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Today's Schedule -->
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3><i class="fa-solid fa-clock text-cyan"></i> Today's Schedule (Monday)</h3>
+              <span class="badge-accred">LH-302 &amp; Labs</span>
+            </div>
+            <div class="bulletin-list" id="todayScheduleList">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 2: COURSES & SYLLABUS TAB
+           ================================================================ -->
+      <div id="coursesTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3><i class="fa-solid fa-graduation-cap text-gold"></i> Curriculum &amp; Enrolled Subjects (Semester VI)</h3>
+            <span class="badge-accred">Total Credits: 20</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th>Course Code</th>
+                  <th>Subject Name</th>
+                  <th>Faculty Instructor</th>
+                  <th>Lecture Room</th>
+                  <th>Credits</th>
+                  <th>Classes (Attended / Total)</th>
+                  <th>Current Performance</th>
+                </tr>
+              </thead>
+              <tbody id="fullCoursesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 3: TIMETABLE TAB
+           ================================================================ -->
+      <div id="timetableTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3><i class="fa-solid fa-calendar-check text-gold"></i> Weekly Class &amp; Laboratory Timetable</h3>
+            <span class="badge-accred">Section: CSE-A | Academic Year 2026</span>
+          </div>
+          
+          <div class="day-tabs-bar" id="timetableDayTabs">
+            <button class="day-tab-btn active" onclick="loadDayTimetable('Monday')">Monday</button>
+            <button class="day-tab-btn" onclick="loadDayTimetable('Tuesday')">Tuesday</button>
+            <button class="day-tab-btn" onclick="loadDayTimetable('Wednesday')">Wednesday</button>
+            <button class="day-tab-btn" onclick="loadDayTimetable('Thursday')">Thursday</button>
+            <button class="day-tab-btn" onclick="loadDayTimetable('Friday')">Friday</button>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th>Time Slot</th>
+                  <th>Subject &amp; Code</th>
+                  <th>Venue / Laboratory</th>
+                  <th>Session Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="timetableTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 4: ATTENDANCE TRACKER TAB
+           ================================================================ -->
+      <div id="attendanceTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3><i class="fa-solid fa-clipboard-check text-green"></i> Subject-Wise Attendance &amp; Shortfall Calculator</h3>
+            <span class="badge-accred" style="color: var(--accent-green);">Regulatory Standard: 75.0% Mandatory</span>
+          </div>
+          <div style="overflow-x: auto;">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th>Course</th>
+                  <th>Total Classes</th>
+                  <th>Attended</th>
+                  <th>Percentage</th>
+                  <th>Visual Meter</th>
+                  <th>Shortfall Status</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 5: EXAMS & GRADE CARD (TRANSCRIPT)
+           ================================================================ -->
+      <div id="gradesTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card" id="printableGradeCardSection">
+          <div class="panel-card-header">
+            <div>
+              <h3><i class="fa-solid fa-award text-gold"></i> Official Academic Performance &amp; Transcript</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px;">Cumulative Grade Point Average (CGPA): <strong style="color: var(--accent-gold); font-size: 1.1rem;">9.14 / 10.00</strong></p>
+            </div>
+            <button class="btn-pill-action" onclick="printOfficialTranscript()">
+              <i class="fa-solid fa-print"></i>
+              <span>Print Official Transcript</span>
+            </button>
+          </div>
+          
+          <div style="overflow-x: auto;">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th>Academic Semester</th>
+                  <th>Credits Registered</th>
+                  <th>Semester GPA (SGPA)</th>
+                  <th>Status / Honours</th>
+                  <th>Evaluation Summary</th>
+                </tr>
+              </thead>
+              <tbody id="gradesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 6: CAMPUS PLACEMENTS & INTERNSHIPS
+           ================================================================ -->
+      <div id="placementsTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <div>
+              <h3><i class="fa-solid fa-briefcase text-cyan"></i> Tier-1 Campus Placement Drives (Batch 2026)</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">Center for Corporate Relations &amp; Placement Cell (CCR)</p>
+            </div>
+            <span class="badge-accred" style="color: var(--accent-gold); border-color: var(--accent-gold);">
+              Highest Package: ₹48.0 LPA
+            </span>
+          </div>
+
+          <div class="placement-list" id="placementListContainer">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 7: FEES & ONLINE PAYMENTS
+           ================================================================ -->
+      <div id="feesTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <div>
+              <h3><i class="fa-solid fa-credit-card text-green"></i> Semester Fee Dues &amp; Payment Portal</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">Secure Payment Gateway (UPI, NetBanking, Credit/Debit Cards)</p>
+            </div>
+          </div>
+
+          <div style="overflow-x: auto;">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th>Fee Description</th>
+                  <th>Amount</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th>Receipt / Action</th>
+                </tr>
+              </thead>
+              <tbody id="feesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 8: DIGITAL LIBRARY
+           ================================================================ -->
+      <div id="libraryTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3><i class="fa-solid fa-book text-gold"></i> Central Digital Library &amp; Issued Books</h3>
+            <span class="badge-accred">RFID Membership: Active</span>
+          </div>
+          
+          <div style="overflow-x: auto; margin-bottom: 24px;">
+            <table class="academic-table">
+              <thead>
+                <tr>
+                  <th>Book Title</th>
+                  <th>Author</th>
+                  <th>Due Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="libraryBooksTableBody"></tbody>
+            </table>
+          </div>
+
+          <div class="highlights-grid">
+            <div class="highlight-box" style="cursor: pointer;" onclick="window.open('https://ieeexplore.ieee.org', '_blank')">
+              <div class="num" style="font-size: 1.2rem;"><i class="fa-solid fa-arrow-up-right-from-square"></i> IEEE Xplore</div>
+              <div class="desc">Institutional Full-Text Access (5 Million+ Research Articles)</div>
+            </div>
+            <div class="highlight-box" style="cursor: pointer;" onclick="window.open('https://dl.acm.org', '_blank')">
+              <div class="num" style="font-size: 1.2rem;"><i class="fa-solid fa-arrow-up-right-from-square"></i> ACM Digital Library</div>
+              <div class="desc">Computing &amp; Software Engineering Archive</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 9: HOSTEL & GATE PASS
+           ================================================================ -->
+      <div id="hostelTab" class="dashboard-tab-content" style="display: none;">
+        <div class="dashboard-grid-2col">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3><i class="fa-solid fa-hotel text-purple"></i> Hostel Allotment Details</h3>
+              <span class="badge-accred">Hall: CV Raman Block</span>
+            </div>
+            <div style="line-height: 1.8; font-size: 0.9rem; color: #e2e8f0;">
+              <p><strong>Room Number:</strong> B-402 (Air-Conditioned Double Occupancy)</p>
+              <p><strong>Hostel Warden:</strong> Prof. S. K. Mukherjee (+91-9876543210)</p>
+              <p><strong>Mess Package:</strong> North &amp; South Indian Non-Veg + Special Diet</p>
+              <p><strong>In-Time Curfew:</strong> 09:30 PM</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h3><i class="fa-solid fa-qrcode text-gold"></i> Digital Outing &amp; Gate Passes</h3>
+              <button class="btn-pill-action" style="padding: 4px 12px; font-size: 0.75rem;" onclick="openGatePassModal()">+ Request Pass</button>
+            </div>
+            <div id="gatePassListContainer" class="bulletin-list">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================
+           TAB 10: CAMPUS NOTICES
+           ================================================================ -->
+      <div id="noticesTab" class="dashboard-tab-content" style="display: none;">
+        <div class="panel-card">
+          <div class="panel-card-header">
+            <h3><i class="fa-solid fa-bullhorn text-red"></i> Official Notice Board &amp; Dean Circulars</h3>
+            <span class="badge-accred">Updated 10 mins ago</span>
+          </div>
+          <div class="bulletin-list" id="fullNoticesListContainer">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal: Generate Hostel Gate Pass -->
+  <div id="gatePassModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-qrcode text-gold"></i> New Digital Hostel Outing Pass</h3>
+        <button class="btn-close-modal" onclick="closeModal('gatePassModal')">&times;</button>
+      </div>
+      <form id="gatePassForm" onsubmit="submitGatePass(event)">
+        <div class="form-group">
+          <label>Destination / Location</label>
+          <input type="text" id="gpDestination" class="form-control" placeholder="e.g. City Center / Tech Meetup" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Out Time</label>
+            <input type="datetime-local" id="gpOutTime" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Expected Return Time</label>
+            <input type="datetime-local" id="gpReturnTime" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Reason for Outing</label>
+          <input type="text" id="gpReason" class="form-control" placeholder="e.g. Academic Project Discussion" required>
+        </div>
+        <button type="submit" class="btn-portal-primary">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Generate Approved Digital Pass</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Official Fee Payment Simulator -->
+  <div id="feePayModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-credit-card text-green"></i> AITAE Online Fee Gateway</h3>
+        <button class="btn-close-modal" onclick="closeModal('feePayModal')">&times;</button>
+      </div>
+      <div id="feePayModalBody" style="color: #e2e8f0;">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let dashboardData = null;
+
+    // Real-Time Clock
+    function updateClock() {
+      const now = new Date();
+      const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      document.getElementById('liveClockDisplay').innerHTML = `<i class="fa-regular fa-clock"></i> ${now.toLocaleDateString('en-US', options)}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Tab Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.dashboard-tab-content').forEach(tab => tab.style.display = 'none');
+      document.querySelectorAll('.nav-item-btn').forEach(btn => btn.classList.remove('active'));
+
+      const activeTab = document.getElementById(tabId);
+      if (activeTab) {
+        activeTab.style.display = 'block';
+      }
+
+      // Update active nav button
+      const navBtn = Array.from(document.querySelectorAll('.nav-item-btn')).find(b => b.getAttribute('onclick')?.includes(tabId));
+      if (navBtn) {
+        navBtn.classList.add('active');
+      }
+
+      // Update Top Titles
+      const titleMap = {
+        'overviewTab': ['Academic Overview', 'Department of Computer Science & Engineering | B.Tech Semester VI'],
+        'coursesTab': ['Curriculum & Syllabi', 'Autonomous Engineering Scheme (Choice Based Credit System - CBCS)'],
+        'timetableTab': ['Class & Laboratory Timetable', 'Spring 2026 Semester Schedule'],
+        'attendanceTab': ['Live Attendance Tracker', 'Subject-wise Biometric & RFID Lecture Attendance'],
+        'gradesTab': ['Examination & Grade Transcripts', 'Official Autonomous Grade Cards (Semesters I to VI)'],
+        'placementsTab': ['Campus Recruitment & Placements', 'Corporate Relations Cell - Tier-1 Drives (2026 Batch)'],
+        'feesTab': ['Online Fee & Dues Management', 'Tuition, Laboratory, Exam & Hostel Fee Receipts'],
+        'libraryTab': ['Digital Research & Library Portal', 'IEEE Xplore, ACM, ScienceDirect & Book Issuance'],
+        'hostelTab': ['Hostel & Mess Management', 'Room Allotment, Warden Approvals & Digital QR Gate Pass'],
+        'noticesTab': ['Campus Announcements & Notices', 'Official Office of the Dean & Registrar Bulletins']
+      };
+
+      if (titleMap[tabId]) {
+        document.getElementById('sectionTitle').textContent = titleMap[tabId][0];
+        document.getElementById('sectionSubtitle').textContent = titleMap[tabId][1];
+      }
+    }
+
+    // Modal Helpers
+    function openGatePassModal() {
+      const now = new Date();
+      const outIso = new Date(now.getTime() + 60*60*1000).toISOString().slice(0, 16);
+      const retIso = new Date(now.getTime() + 5*60*60*1000).toISOString().slice(0, 16);
+      document.getElementById('gpOutTime').value = outIso;
+      document.getElementById('gpReturnTime').value = retIso;
+      document.getElementById('gatePassModal').style.display = 'flex';
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    // Load Complete Student Dashboard Data
+    async function loadDashboard() {
+      try {
+        const response = await fetch('/api/student/dashboard');
+        if (!response.ok) {
+          window.location.href = 'index.html';
+          return;
+        }
+
+        dashboardData = await response.json();
+        const user = dashboardData.user;
+        const stats = dashboardData.stats;
+
+        // Render User Header
+        document.getElementById('topUserDisplayName').textContent = `${user.full_name} (${user.role.toUpperCase()})`;
+        document.getElementById('sidebarName').textContent = user.full_name;
+        document.getElementById('sidebarRoll').textContent = user.roll_number || user.username;
+        document.getElementById('sidebarRoleTag').textContent = user.role.toUpperCase();
+        if (user.avatar) {
+          document.getElementById('sidebarAvatar').src = user.avatar;
+        }
+
+        // Render Overview Stats
+        document.getElementById('statCGPA').innerHTML = `${stats.cgpa || '9.14'} <span style="font-size: 1rem; color: var(--text-muted);">/ 10</span>`;
+        document.getElementById('statAttendance').textContent = `${stats.overallAttendance}%`;
+
+        // Render Overview Courses Table
+        const overviewTbody = document.getElementById('overviewCoursesTableBody');
+        overviewTbody.innerHTML = '';
+        dashboardData.courses.forEach(c => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${c.code}</strong></td>
+            <td>${c.title}</td>
+            <td>${c.credits} Credits</td>
+            <td>${c.faculty}</td>
+            <td>
+              <span style="font-weight: 700; color: ${c.attendance >= 85 ? 'var(--accent-green)' : c.attendance >= 75 ? 'var(--accent-gold)' : 'var(--accent-red)'}">
+                ${c.attendance}%
+              </span>
+            </td>
+          `;
+          overviewTbody.appendChild(tr);
+        });
+
+        // Render Today's Schedule
+        const todayScheduleList = document.getElementById('todayScheduleList');
+        todayScheduleList.innerHTML = '';
+        (dashboardData.timetable.Monday || []).forEach(item => {
+          const div = document.createElement('div');
+          div.className = 'bulletin-item';
+          div.innerHTML = `
+            <div class="meta">
+              <span class="tag">${item.time}</span>
+              <span>${item.room}</span>
+            </div>
+            <div><strong>${item.code}:</strong> ${item.course} <em>(${item.type})</em></div>
+          `;
+          todayScheduleList.appendChild(div);
+        });
+
+        // Render Full Courses Tab
+        renderFullCourses();
+
+        // Render Attendance Tab
+        renderAttendance();
+
+        // Render Timetable Tab (Monday default)
+        loadDayTimetable('Monday');
+
+        // Render Grades Tab
+        renderGrades();
+
+        // Render Placements Tab
+        renderPlacements();
+
+        // Render Fees Tab
+        renderFees();
+
+        // Render Library Tab
+        renderLibrary();
+
+        // Render Gate Passes Tab
+        renderGatePasses();
+
+        // Render Notices Tab
+        renderNotices();
+
+      } catch (err) {
+        console.error('Error loading dashboard:', err);
+      }
+    }
+
+    function renderFullCourses() {
+      const tbody = document.getElementById('fullCoursesTableBody');
+      tbody.innerHTML = '';
+      dashboardData.courses.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><span class="badge-grade">${c.code}</span></td>
+          <td><strong>${c.title}</strong></td>
+          <td>${c.faculty}</td>
+          <td>${c.room}</td>
+          <td>${c.credits}</td>
+          <td>${c.attended} / ${c.total_classes}</td>
+          <td><span class="badge-grade outstanding">${c.grade} (${c.attendance}%)</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function loadDayTimetable(day) {
+      document.querySelectorAll('#timetableDayTabs .day-tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.trim() === day);
+      });
+
+      const tbody = document.getElementById('timetableTableBody');
+      tbody.innerHTML = '';
+      const slots = dashboardData.timetable[day] || [];
+
+      if (slots.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No scheduled lectures for this day.</td></tr>`;
+        return;
+      }
+
+      slots.forEach(slot => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong><i class="fa-regular fa-clock text-gold"></i> ${slot.time}</strong></td>
+          <td><strong>${slot.course}</strong> <span style="font-size: 0.78rem; color: var(--text-muted);">(${slot.code})</span></td>
+          <td>${slot.room}</td>
+          <td><span class="badge-accred">${slot.type}</span></td>
+          <td><span class="badge-tag-good"><i class="fa-solid fa-circle-check"></i> Confirmed</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderAttendance() {
+      const tbody = document.getElementById('attendanceTableBody');
+      tbody.innerHTML = '';
+
+      dashboardData.courses.forEach(c => {
+        const colorClass = c.attendance >= 85 ? 'green' : (c.attendance >= 75 ? 'yellow' : 'red');
+        const shortfall = c.attendance < 75 ? '<span style="color: var(--accent-red); font-weight: bold;"><i class="fa-solid fa-triangle-exclamation"></i> Danger: Below 75%</span>' : '<span style="color: var(--accent-green);"><i class="fa-solid fa-check"></i> Normal</span>';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${c.title}</strong> <span style="font-size: 0.75rem; color: var(--text-muted);">(${c.code})</span></td>
+          <td>${c.total_classes}</td>
+          <td>${c.attended}</td>
+          <td><strong style="font-size: 1rem; color: ${colorClass === 'green' ? 'var(--accent-green)' : colorClass === 'yellow' ? 'var(--accent-gold)' : 'var(--accent-red)'}">${c.attendance}%</strong></td>
+          <td style="min-width: 140px;">
+            <div class="attendance-bar-wrapper">
+              <div class="attendance-fill ${colorClass}" style="width: ${c.attendance}%"></div>
+            </div>
+          </td>
+          <td>${shortfall}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderGrades() {
+      const tbody = document.getElementById('gradesTableBody');
+      tbody.innerHTML = '';
+
+      dashboardData.semesterGrades.forEach(g => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${g.semester}</strong></td>
+          <td>${g.credits} Credits</td>
+          <td><span class="badge-grade outstanding">${g.sgpa} SGPA</span></td>
+          <td><span class="badge-tag-good">${g.status}</span></td>
+          <td>First Class with Distinction</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderPlacements() {
+      const container = document.getElementById('placementListContainer');
+      container.innerHTML = '';
+
+      dashboardData.placements.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'placement-item-card';
+        div.innerHTML = `
+          <div class="placement-company-info">
+            <div class="placement-logo">${p.logo}</div>
+            <div class="placement-details">
+              <h4>${p.company} - ${p.role}</h4>
+              <p><i class="fa-solid fa-location-dot"></i> ${p.location} | Deadline: ${p.deadline}</p>
+              <p style="margin-top: 4px; color: var(--accent-cyan); font-weight: 600;">Status: ${p.status}</p>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div class="placement-ctc">${p.package}</div>
+            <button class="btn-apply-drive" style="margin-top: 6px;" onclick="applyForPlacement(${p.id})">
+              ${p.status.includes('Applied') ? '<i class="fa-solid fa-check"></i> Applied' : '<i class="fa-solid fa-paper-plane"></i> Apply Now'}
+            </button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    async function applyForPlacement(placementId) {
+      try {
+        const response = await fetch('/api/student/apply-placement', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ placementId })
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+          alert(data.message);
+          loadDashboard();
+        }
+      } catch (err) {
+        alert('Could not submit application.');
+      }
+    }
+
+    function renderFees() {
+      const tbody = document.getElementById('feesTableBody');
+      tbody.innerHTML = '';
+
+      dashboardData.fees.forEach(f => {
+        const tr = document.createElement('tr');
+        const isPaid = f.status === 'Paid';
+        tr.innerHTML = `
+          <td><strong>${f.description}</strong></td>
+          <td><strong style="color: var(--accent-gold); font-family: var(--font-mono);">₹${f.amount.toLocaleString('en-IN')}</strong></td>
+          <td>${f.due_date}</td>
+          <td>
+            <span class="badge-grade ${isPaid ? 'outstanding' : ''}" style="${isPaid ? '' : 'color: var(--accent-red); border-color: rgba(239,68,68,0.4); background: rgba(239,68,68,0.1);'}">
+              ${f.status}
+            </span>
+          </td>
+          <td>
+            ${isPaid 
+              ? `<button class="btn-pill-action" style="padding: 4px 10px; font-size: 0.75rem;" onclick="downloadReceipt('${f.id}', '${f.receipt_no}', ${f.amount})"><i class="fa-solid fa-download"></i> Receipt (${f.receipt_no.slice(-5)})</button>`
+              : `<button class="btn-portal-primary" style="padding: 6px 14px; font-size: 0.78rem; width: auto;" onclick="openFeePayModal('${f.id}', '${f.description}', ${f.amount})"><i class="fa-solid fa-lock"></i> Pay ₹${f.amount.toLocaleString('en-IN')}</button>`}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openFeePayModal(feeId, desc, amount) {
+      const modalBody = document.getElementById('feePayModalBody');
+      modalBody.innerHTML = `
+        <div style="background: rgba(8,14,26,0.7); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px solid var(--border-color);">
+          <p style="font-size: 0.85rem; color: var(--text-muted);">Payment Item</p>
+          <h4 style="font-size: 1.1rem; color: #fff; margin-bottom: 8px;">${desc}</h4>
+          <p style="font-size: 1.4rem; color: var(--accent-gold); font-family: var(--font-mono); font-weight: 800;">₹${amount.toLocaleString('en-IN')}</p>
+        </div>
+        <div class="form-group">
+          <label>Select Payment Mode</label>
+          <select id="payMode" class="form-control" style="padding-left: 14px;">
+            <option>UPI / QR Code (Instant Approval)</option>
+            <option>Net Banking (HDFC, SBI, ICICI, Axis)</option>
+            <option>Debit / Credit Card</option>
+          </select>
+        </div>
+        <button type="button" class="btn-portal-primary" style="margin-top: 10px;" onclick="executeFeePayment('${feeId}')">
+          <i class="fa-solid fa-shield-check"></i> Authorize Payment
+        </button>
+      `;
+      document.getElementById('feePayModal').style.display = 'flex';
+    }
+
+    async function executeFeePayment(feeId) {
+      try {
+        const response = await fetch('/api/student/pay-fee', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ feeId })
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+          closeModal('feePayModal');
+          alert(`Success! ${data.message}\nOfficial Receipt Number: ${data.receipt_no}`);
+          loadDashboard();
+        }
+      } catch (err) {
+        alert('Payment failed.');
+      }
+    }
+
+    function downloadReceipt(feeId, receiptNo, amount) {
+      alert(`=== OFFICIAL FEE RECEIPT ===\nApex Institute of Technology & Advanced Engineering\nReceipt No: ${receiptNo}\nStudent: ${dashboardData.user.full_name} (${dashboardData.user.roll_number})\nAmount: ₹${amount.toLocaleString('en-IN')}\nStatus: PAID & VERIFIED BY ACCOUNTS CELL`);
+    }
+
+    function renderLibrary() {
+      const tbody = document.getElementById('libraryBooksTableBody');
+      tbody.innerHTML = '';
+      dashboardData.books.forEach(b => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${b.title}</strong></td>
+          <td>${b.author}</td>
+          <td>${b.due_date}</td>
+          <td><span class="badge-accred">${b.status}</span></td>
+          <td><button class="btn-pill-action" style="padding: 4px 10px; font-size: 0.75rem;" onclick="alert('Book renewed for an additional 14 days.')"><i class="fa-solid fa-rotate-right"></i> Renew</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderGatePasses() {
+      const container = document.getElementById('gatePassListContainer');
+      container.innerHTML = '';
+      dashboardData.gatepasses.forEach(gp => {
+        const div = document.createElement('div');
+        div.className = 'bulletin-item';
+        div.innerHTML = `
+          <div class="meta">
+            <span class="tag" style="background: rgba(16,185,129,0.2); color: var(--accent-green);">Pass #${gp.id}</span>
+            <span>Out: ${gp.out_time}</span>
+          </div>
+          <div><strong>Destination:</strong> ${gp.destination}</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Status: <span style="color: var(--accent-green); font-weight: 700;">${gp.status}</span></div>
+          <div style="margin-top: 6px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-gold);"><i class="fa-solid fa-qrcode"></i> ${gp.qr}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    async function submitGatePass(e) {
+      e.preventDefault();
+      const destination = document.getElementById('gpDestination').value;
+      const out_time = document.getElementById('gpOutTime').value;
+      const return_time = document.getElementById('gpReturnTime').value;
+      const reason = document.getElementById('gpReason').value;
+
+      try {
+        const response = await fetch('/api/student/gatepass', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ destination, out_time, return_time, reason })
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+          closeModal('gatePassModal');
+          alert('Gate Pass Generated & Digitally Approved!');
+          loadDashboard();
+        }
+      } catch (err) {
+        alert('Could not generate gate pass.');
+      }
+    }
+
+    function renderNotices() {
+      const container = document.getElementById('fullNoticesListContainer');
+      container.innerHTML = '';
+      dashboardData.notices.forEach(n => {
+        const div = document.createElement('div');
+        div.className = `bulletin-item ${n.urgent ? 'urgent' : ''}`;
+        div.innerHTML = `
+          <div class="meta">
+            <span class="tag">${n.category}</span>
+            <span>${n.date}</span>
+          </div>
+          <div style="font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 4px;">${n.title}</div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary);">${n.description}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function printOfficialTranscript() {
+      window.print();
+    }
+
+    async function performLogout() {
+      try {
+        await fetch('/api/logout', { method: 'POST' });
+        window.location.href = 'index.html';
+      } catch (err) {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // Initialize Dashboard
+    loadDashboard();
+  </script>
+</body>
+</html>
