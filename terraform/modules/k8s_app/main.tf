@@ -168,7 +168,7 @@ resource "kubernetes_deployment" "web_app" {
       spec {
         container {
           name  = "web-app"
-          image = "login-app:1.0.0"
+          image = "rajatrokde/collage-website:1.0.0"
           port {
             container_port = 3000
           }
