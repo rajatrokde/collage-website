@@ -4,13 +4,13 @@ FROM node:20-alpine
 # Working directory
 WORKDIR /app
 
-# Copy dependency definition files
-COPY package*.json ./
+# Copy package definition files explicitly
+COPY package.json package-lock.json* ./
 
-# Install production dependencies cleanly
-RUN npm ci --omit=dev || npm install --omit=dev
+# Install production dependencies
+RUN npm install --omit=dev
 
-# Copy application source code
+# Copy remaining application code
 COPY . .
 
 # Environment variables
@@ -23,5 +23,5 @@ EXPOSE 3000
 # Run as non-root user for security
 USER node
 
-# Start server application
+# Start application
 CMD ["node", "server.js"]
