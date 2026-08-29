@@ -103,4 +103,4 @@ docker-compose up -d --build
 - `GET /api/placements`, `POST /api/placements`, `PUT /api/placements/:id`, `DELETE /api/placements/:id`
 - `GET /api/fees`, `POST /api/fees`, `PUT /api/fees/:id`, `DELETE /api/fees/:id`
 - `GET /api/gatepasses`, `POST /api/student/gatepass`, `PUT /api/gatepasses/:id`, `DELETE /api/gatepasses/:id`
-.
+
