@@ -1,27 +1,27 @@
 # Base Image
-FROM node:20-alpine AS base
+FROM node:20-alpine
+
+# Working directory
 WORKDIR /app
 
-# Install dependencies
+# Copy dependency files
 COPY package*.json ./
-RUN npm ci --only=production
+
+# Install production dependencies
+RUN npm ci --omit=dev
 
 # Copy application source code
 COPY . .
 
-# Set environment to production
+# Environment variables
 ENV NODE_ENV=production
 ENV PORT=3000
 
 # Expose port
 EXPOSE 3000
 
-# Non-root user for security
+# Run as non-root user
 USER node
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:3000/healthz || exit 1
-
-# Command to run the server
+# Start application
 CMD ["node", "server.js"]
