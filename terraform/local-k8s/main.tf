@@ -96,7 +96,7 @@ resource "kubernetes_deployment" "mysql" {
       spec {
         container {
           name  = "mysql"
-          image = "mysql:8.0"
+          image = "mysql:8.0.36"
           port { container_port = 3306 }
 
           env {
@@ -168,7 +168,7 @@ resource "kubernetes_deployment" "web_app" {
       spec {
         container {
           name  = "web-app"
-          image = "login-app:latest"
+          image = "login-app:1.0.0"
           port { container_port = 3000 }
 
           env_from {
