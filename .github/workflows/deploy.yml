@@ -22,7 +22,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/collage-website:latest .
+          docker buildx -t ${{ secrets.DOCKERHUB_USERNAME }}/collage-website:latest .
 
       - name: Push Docker image
         run: |
