@@ -1,18 +1,46 @@
-FROM node:20-alpine
+name: Docker CI Pipeline
 
-WORKDIR /app
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-COPY package*.json ./
+jobs:
+  build-and-push:
+    name: Build Docker Image & Push to Docker Hub
+    runs-on: ubuntu-latest
 
-RUN npm install --omit=dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-COPY . .
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-ENV NODE_ENV=production
-ENV PORT=3000
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-EXPOSE 3000
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME || secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN || secrets.DOCKERHUB_TOKEN }}
 
-USER node
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME || secrets.DOCKERHUB_USERNAME || 'rajatrokde' }}/collage-website:latest
+            ${{ secrets.DOCKER_USERNAME || secrets.DOCKERHUB_USERNAME || 'rajatrokde' }}/collage-website:1.0.${{ github.run_number }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
-CMD ["node", "server.js"]
+      - name: Build Summary
+        run: |
+          echo "### 🚀 Docker Image Successfully Built & Pushed!" >> $GITHUB_STEP_SUMMARY
+          echo "**Image**: \`${{ secrets.DOCKER_USERNAME || secrets.DOCKERHUB_USERNAME }}/collage-website:latest\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Tag**: \`${{ secrets.DOCKER_USERNAME || secrets.DOCKERHUB_USERNAME }}/collage-website:1.0.${{ github.run_number }}\`" >> $GITHUB_STEP_SUMMARY
