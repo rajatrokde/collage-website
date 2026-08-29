@@ -4,11 +4,12 @@ FROM node:20-alpine
 # Working directory
 WORKDIR /app
 
-# Copy dependency files
+# Copy dependency definition files
 COPY package*.json ./
 
-# Install production dependencies
-RUN npm install
+# Install production dependencies cleanly
+RUN npm ci --omit=dev || npm install --omit=dev
+
 # Copy application source code
 COPY . .
 
@@ -19,8 +20,8 @@ ENV PORT=3000
 # Expose port
 EXPOSE 3000
 
-# Run as non-root user
+# Run as non-root user for security
 USER node
 
-# Start application
+# Start server application
 CMD ["node", "server.js"]
