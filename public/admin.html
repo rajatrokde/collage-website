@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AITAE Backend Access Portal - Data Management & Control Panel</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="top-inst-bar">
+    <div class="accreditations">
+      <span class="badge-accred" style="background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border-color: rgba(239, 68, 68, 0.4);">
+        <i class="fa-solid fa-lock"></i> BACKEND CONTROL PANEL
+      </span>
+      <span class="badge-accred">FULL REST API CRUD ACTIVE</span>
+    </div>
+    <div class="quick-contacts">
+      <a href="dashboard.html"><i class="fa-solid fa-gauge"></i> Student Dashboard</a>
+      <a href="index.html"><i class="fa-solid fa-right-to-bracket"></i> Login Page</a>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="college-main-header">
+    <div class="brand-wrapper">
+      <div class="college-crest-icon" style="background: linear-gradient(135deg, #10b981 0%, #047857 100%);">
+        <i class="fa-solid fa-sliders"></i>
+      </div>
+      <div class="brand-text">
+        <h1>APEX INSTITUTE OF TECHNOLOGY - BACKEND ACCESS PORTAL</h1>
+        <p>Dynamic Data Management System | Add, Edit, Modify &amp; Delete Services</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Layout -->
+  <main style="max-width: 1300px; margin: 30px auto; padding: 0 20px;">
+    
+    <!-- Navigation Tabs -->
+    <div class="role-tabs" style="grid-template-columns: repeat(6, 1fr); margin-bottom: 24px;">
+      <button class="role-tab-btn active" data-tab="usersTab" onclick="switchAdminTab('usersTab')">
+        <span class="role-icon"><i class="fa-solid fa-users"></i></span>
+        <span>Users / Students</span>
+      </button>
+      <button class="role-tab-btn" data-tab="coursesTab" onclick="switchAdminTab('coursesTab')">
+        <span class="role-icon"><i class="fa-solid fa-book-open"></i></span>
+        <span>Courses</span>
+      </button>
+      <button class="role-tab-btn" data-tab="noticesTab" onclick="switchAdminTab('noticesTab')">
+        <span class="role-icon"><i class="fa-solid fa-bullhorn"></i></span>
+        <span>Notices</span>
+      </button>
+      <button class="role-tab-btn" data-tab="placementsTab" onclick="switchAdminTab('placementsTab')">
+        <span class="role-icon"><i class="fa-solid fa-briefcase"></i></span>
+        <span>Placements</span>
+      </button>
+      <button class="role-tab-btn" data-tab="feesTab" onclick="switchAdminTab('feesTab')">
+        <span class="role-icon"><i class="fa-solid fa-credit-card"></i></span>
+        <span>Fee Dues</span>
+      </button>
+      <button class="role-tab-btn" data-tab="gatepassTab" onclick="switchAdminTab('gatepassTab')">
+        <span class="role-icon"><i class="fa-solid fa-qrcode"></i></span>
+        <span>Gate Passes</span>
+      </button>
+    </div>
+
+    <!-- Alert Box -->
+    <div id="adminAlert" class="portal-alert"></div>
+
+    <!-- TAB 1: USERS & STUDENTS -->
+    <section id="usersTab" class="admin-tab-content">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fa-solid fa-users text-gold"></i> Registered Students &amp; Faculty Accounts</h3>
+          <button class="btn-pill-action" onclick="openAddUserModal()">+ Add New User</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="academic-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Roll No / Username</th>
+                <th>Full Name</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>CGPA / Designation</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: COURSES -->
+    <section id="coursesTab" class="admin-tab-content" style="display: none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fa-solid fa-book-open text-cyan"></i> Curriculum Courses &amp; Subjects</h3>
+          <button class="btn-pill-action" onclick="openAddCourseModal()">+ Add New Course</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="academic-table">
+            <thead>
+              <tr>
+                <th>Code</th>
+                <th>Course Title</th>
+                <th>Credits</th>
+                <th>Faculty</th>
+                <th>Room</th>
+                <th>Classes</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="coursesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: NOTICES -->
+    <section id="noticesTab" class="admin-tab-content" style="display: none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fa-solid fa-bullhorn text-red"></i> Campus Notices &amp; Bulletins</h3>
+          <button class="btn-pill-action" onclick="openAddNoticeModal()">+ Publish Notice</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="academic-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Urgent</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="noticesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: PLACEMENTS -->
+    <section id="placementsTab" class="admin-tab-content" style="display: none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fa-solid fa-briefcase text-green"></i> Campus Placement Drives</h3>
+          <button class="btn-pill-action" onclick="openAddPlacementModal()">+ Add Placement Drive</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="academic-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Package</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="placementsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: FEES -->
+    <section id="feesTab" class="admin-tab-content" style="display: none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fa-solid fa-credit-card text-gold"></i> Fee Records &amp; Dues</h3>
+          <button class="btn-pill-action" onclick="openAddFeeModal()">+ Add Fee Item</button>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="academic-table">
+            <thead>
+              <tr>
+                <th>Fee ID</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="feesTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: GATE PASSES -->
+    <section id="gatepassTab" class="admin-tab-content" style="display: none;">
+      <div class="panel-card">
+        <div class="panel-card-header">
+          <h3><i class="fa-solid fa-qrcode text-purple"></i> Hostel Gate Passes</h3>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="academic-table">
+            <thead>
+              <tr>
+                <th>Pass ID</th>
+                <th>Destination</th>
+                <th>Out Time</th>
+                <th>Return Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="gatepassTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: ADD / EDIT USER -->
+  <div id="userModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="userModalTitle"><i class="fa-solid fa-user-plus text-gold"></i> Add New User</h3>
+        <button class="btn-close-modal" onclick="closeModal('userModal')">&times;</button>
+      </div>
+      <form onsubmit="saveUser(event)">
+        <input type="hidden" id="editUserId">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Username / Roll No</label>
+            <input type="text" id="uUsername" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="uFullName" class="form-control" required>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="uEmail" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Role</label>
+            <select id="uRole" class="form-control" style="padding-left: 14px;">
+              <option value="student">Student</option>
+              <option value="faculty">Faculty</option>
+              <option value="admin">Admin</option>
+              <option value="parent">Parent</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Department</label>
+            <input type="text" id="uDepartment" class="form-control" value="Computer Science & Engineering">
+          </div>
+          <div class="form-group">
+            <label>CGPA / Score</label>
+            <input type="number" step="0.01" id="uCGPA" class="form-control" value="9.0">
+          </div>
+        </div>
+        <button type="submit" class="btn-portal-primary">Save User Record</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT COURSE -->
+  <div id="courseModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="courseModalTitle"><i class="fa-solid fa-book text-gold"></i> Add New Course</h3>
+        <button class="btn-close-modal" onclick="closeModal('courseModal')">&times;</button>
+      </div>
+      <form onsubmit="saveCourse(event)">
+        <input type="hidden" id="editCourseIsEdit" value="false">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Course Code</label>
+            <input type="text" id="cCode" class="form-control" placeholder="e.g. CS607" required>
+          </div>
+          <div class="form-group">
+            <label>Course Title</label>
+            <input type="text" id="cTitle" class="form-control" placeholder="e.g. Cloud Security" required>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Credits</label>
+            <input type="number" id="cCredits" class="form-control" value="4">
+          </div>
+          <div class="form-group">
+            <label>Faculty Instructor</label>
+            <input type="text" id="cFaculty" class="form-control" value="Dr. Rajeshwari Ramanujan">
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Lecture Room</label>
+            <input type="text" id="cRoom" class="form-control" value="LH-302">
+          </div>
+          <div class="form-group">
+            <label>Total Classes</label>
+            <input type="number" id="cTotalClasses" class="form-control" value="36">
+          </div>
+        </div>
+        <button type="submit" class="btn-portal-primary">Save Course</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT NOTICE -->
+  <div id="noticeModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="noticeModalTitle"><i class="fa-solid fa-bullhorn text-red"></i> Publish Notice</h3>
+        <button class="btn-close-modal" onclick="closeModal('noticeModal')">&times;</button>
+      </div>
+      <form onsubmit="saveNotice(event)">
+        <input type="hidden" id="editNoticeId">
+        <div class="form-group">
+          <label>Notice Title</label>
+          <input type="text" id="nTitle" class="form-control" placeholder="e.g. Exam Schedule Released" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Category</label>
+            <input type="text" id="nCategory" class="form-control" value="Examination">
+          </div>
+          <div class="form-group">
+            <label>Urgent Priority?</label>
+            <select id="nUrgent" class="form-control" style="padding-left: 14px;">
+              <option value="false">Normal Priority</option>
+              <option value="true">Urgent Alert</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description Content</label>
+          <textarea id="nDescription" class="form-control" rows="4" style="padding-left: 14px;" required></textarea>
+        </div>
+        <button type="submit" class="btn-portal-primary">Publish Circular</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT PLACEMENT -->
+  <div id="placementModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-briefcase text-green"></i> Add Placement Drive</h3>
+        <button class="btn-close-modal" onclick="closeModal('placementModal')">&times;</button>
+      </div>
+      <form onsubmit="savePlacement(event)">
+        <input type="hidden" id="editPlacementId">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" id="pCompany" class="form-control" placeholder="e.g. Apple Inc." required>
+          </div>
+          <div class="form-group">
+            <label>Job Role</label>
+            <input type="text" id="pRole" class="form-control" placeholder="e.g. iOS Engineer" required>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>CTC Package</label>
+            <input type="text" id="pPackage" class="form-control" value="₹40.0 LPA">
+          </div>
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" id="pLocation" class="form-control" value="Bangalore">
+          </div>
+        </div>
+        <button type="submit" class="btn-portal-primary">Save Placement Drive</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD FEE -->
+  <div id="feeModal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-credit-card text-gold"></i> Create Fee Record</h3>
+        <button class="btn-close-modal" onclick="closeModal('feeModal')">&times;</button>
+      </div>
+      <form onsubmit="saveFee(event)">
+        <div class="form-group">
+          <label>Fee Description</label>
+          <input type="text" id="fDesc" class="form-control" placeholder="e.g. Library Deposit Fee" required>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label>Amount (₹)</label>
+            <input type="number" id="fAmount" class="form-control" value="2500" required>
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <input type="text" id="fDueDate" class="form-control" value="30 Sept 2026">
+          </div>
+        </div>
+        <button type="submit" class="btn-portal-primary">Create Fee Record</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function showAdminAlert(msg, isSuccess = true) {
+      const box = document.getElementById('adminAlert');
+      box.innerHTML = `<i class="fa-solid ${isSuccess ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i> <span>${msg}</span>`;
+      box.className = `portal-alert ${isSuccess ? 'success' : 'error'}`;
+      box.style.display = 'flex';
+      setTimeout(() => { box.style.display = 'none'; }, 4000);
+    }
+
+    function switchAdminTab(tabId) {
+      document.querySelectorAll('.admin-tab-content').forEach(t => t.style.display = 'none');
+      document.querySelectorAll('.role-tab-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(tabId).style.display = 'block';
+      const btn = Array.from(document.querySelectorAll('.role-tab-btn')).find(b => b.getAttribute('data-tab') === tabId);
+      if (btn) btn.classList.add('active');
+
+      if (tabId === 'usersTab') loadUsers();
+      if (tabId === 'coursesTab') loadCourses();
+      if (tabId === 'noticesTab') loadNotices();
+      if (tabId === 'placementsTab') loadPlacements();
+      if (tabId === 'feesTab') loadFees();
+      if (tabId === 'gatepassTab') loadGatepasses();
+    }
+
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    // --- 1. USERS CRUD ---
+    async function loadUsers() {
+      const res = await fetch('/api/admin/users');
+      const data = await res.json();
+      const tbody = document.getElementById('usersTableBody');
+      tbody.innerHTML = '';
+      data.users.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${u.id}</td>
+          <td><strong>${u.username}</strong></td>
+          <td>${u.full_name}</td>
+          <td><span class="badge-accred">${u.role}</span></td>
+          <td>${u.department || 'N/A'}</td>
+          <td>${u.cgpa || u.degree || '-'}</td>
+          <td>
+            <button class="btn-pill-action" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-red);" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openAddUserModal() {
+      document.getElementById('editUserId').value = '';
+      document.getElementById('uUsername').value = '';
+      document.getElementById('uFullName').value = '';
+      document.getElementById('uEmail').value = '';
+      openModal('userModal');
+    }
+
+    async function saveUser(e) {
+      e.preventDefault();
+      const payload = {
+        username: document.getElementById('uUsername').value,
+        full_name: document.getElementById('uFullName').value,
+        email: document.getElementById('uEmail').value,
+        role: document.getElementById('uRole').value,
+        department: document.getElementById('uDepartment').value,
+        cgpa: document.getElementById('uCGPA').value
+      };
+
+      const res = await fetch('/api/admin/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeModal('userModal');
+        showAdminAlert(data.message);
+        loadUsers();
+      }
+    }
+
+    async function deleteUser(id) {
+      if (!confirm('Are you sure you want to delete this user?')) return;
+      const res = await fetch(`/api/admin/users/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showAdminAlert(data.message);
+        loadUsers();
+      }
+    }
+
+    // --- 2. COURSES CRUD ---
+    async function loadCourses() {
+      const res = await fetch('/api/courses');
+      const data = await res.json();
+      const tbody = document.getElementById('coursesTableBody');
+      tbody.innerHTML = '';
+      data.courses.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${c.code}</strong></td>
+          <td>${c.title}</td>
+          <td>${c.credits}</td>
+          <td>${c.faculty}</td>
+          <td>${c.room}</td>
+          <td>${c.attended || 0}/${c.total_classes || 30} (${c.attendance}%)</td>
+          <td>
+            <button class="btn-pill-action" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-red);" onclick="deleteCourse('${c.code}')"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openAddCourseModal() {
+      document.getElementById('cCode').value = '';
+      document.getElementById('cTitle').value = '';
+      openModal('courseModal');
+    }
+
+    async function saveCourse(e) {
+      e.preventDefault();
+      const payload = {
+        code: document.getElementById('cCode').value,
+        title: document.getElementById('cTitle').value,
+        credits: document.getElementById('cCredits').value,
+        faculty: document.getElementById('cFaculty').value,
+        room: document.getElementById('cRoom').value,
+        total_classes: document.getElementById('cTotalClasses').value,
+        attended: document.getElementById('cTotalClasses').value
+      };
+
+      const res = await fetch('/api/courses', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeModal('courseModal');
+        showAdminAlert(data.message);
+        loadCourses();
+      }
+    }
+
+    async function deleteCourse(code) {
+      if (!confirm(`Delete course ${code}?`)) return;
+      const res = await fetch(`/api/courses/${code}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showAdminAlert(data.message);
+        loadCourses();
+      }
+    }
+
+    // --- 3. NOTICES CRUD ---
+    async function loadNotices() {
+      const res = await fetch('/api/notices');
+      const data = await res.json();
+      const tbody = document.getElementById('noticesTableBody');
+      tbody.innerHTML = '';
+      data.notices.forEach(n => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${n.id}</td>
+          <td><strong>${n.title}</strong></td>
+          <td>${n.category}</td>
+          <td>${n.date}</td>
+          <td>${n.urgent ? '<span style="color:var(--accent-red); font-weight:bold;">URGENT</span>' : 'Normal'}</td>
+          <td>
+            <button class="btn-pill-action" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-red);" onclick="deleteNotice(${n.id})"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openAddNoticeModal() {
+      document.getElementById('nTitle').value = '';
+      document.getElementById('nDescription').value = '';
+      openModal('noticeModal');
+    }
+
+    async function saveNotice(e) {
+      e.preventDefault();
+      const payload = {
+        title: document.getElementById('nTitle').value,
+        category: document.getElementById('nCategory').value,
+        urgent: document.getElementById('nUrgent').value === 'true',
+        description: document.getElementById('nDescription').value
+      };
+
+      const res = await fetch('/api/notices', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeModal('noticeModal');
+        showAdminAlert(data.message);
+        loadNotices();
+      }
+    }
+
+    async function deleteNotice(id) {
+      if (!confirm('Delete notice?')) return;
+      const res = await fetch(`/api/notices/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showAdminAlert(data.message);
+        loadNotices();
+      }
+    }
+
+    // --- 4. PLACEMENTS CRUD ---
+    async function loadPlacements() {
+      const res = await fetch('/api/placements');
+      const data = await res.json();
+      const tbody = document.getElementById('placementsTableBody');
+      tbody.innerHTML = '';
+      data.placements.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.id}</td>
+          <td><strong>${p.company}</strong></td>
+          <td>${p.role}</td>
+          <td><strong style="color: var(--accent-gold);">${p.package}</strong></td>
+          <td>${p.deadline}</td>
+          <td>${p.status}</td>
+          <td>
+            <button class="btn-pill-action" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-red);" onclick="deletePlacement(${p.id})"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openAddPlacementModal() {
+      document.getElementById('pCompany').value = '';
+      document.getElementById('pRole').value = '';
+      openModal('placementModal');
+    }
+
+    async function savePlacement(e) {
+      e.preventDefault();
+      const payload = {
+        company: document.getElementById('pCompany').value,
+        role: document.getElementById('pRole').value,
+        package: document.getElementById('pPackage').value,
+        location: document.getElementById('pLocation').value
+      };
+
+      const res = await fetch('/api/placements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeModal('placementModal');
+        showAdminAlert(data.message);
+        loadPlacements();
+      }
+    }
+
+    async function deletePlacement(id) {
+      if (!confirm('Delete placement drive?')) return;
+      const res = await fetch(`/api/placements/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showAdminAlert(data.message);
+        loadPlacements();
+      }
+    }
+
+    // --- 5. FEES CRUD ---
+    async function loadFees() {
+      const res = await fetch('/api/fees');
+      const data = await res.json();
+      const tbody = document.getElementById('feesTableBody');
+      tbody.innerHTML = '';
+      data.fees.forEach(f => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${f.id}</strong></td>
+          <td>${f.description}</td>
+          <td>₹${f.amount.toLocaleString('en-IN')}</td>
+          <td>${f.due_date}</td>
+          <td><span class="badge-accred">${f.status}</span></td>
+          <td>
+            <button class="btn-pill-action" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-red);" onclick="deleteFee('${f.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function openAddFeeModal() {
+      document.getElementById('fDesc').value = '';
+      openModal('feeModal');
+    }
+
+    async function saveFee(e) {
+      e.preventDefault();
+      const payload = {
+        description: document.getElementById('fDesc').value,
+        amount: document.getElementById('fAmount').value,
+        due_date: document.getElementById('fDueDate').value
+      };
+
+      const res = await fetch('/api/fees', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        closeModal('feeModal');
+        showAdminAlert(data.message);
+        loadFees();
+      }
+    }
+
+    async function deleteFee(id) {
+      if (!confirm(`Delete fee record ${id}?`)) return;
+      const res = await fetch(`/api/fees/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showAdminAlert(data.message);
+        loadFees();
+      }
+    }
+
+    // --- 6. GATEPASSES CRUD ---
+    async function loadGatepasses() {
+      const res = await fetch('/api/gatepasses');
+      const data = await res.json();
+      const tbody = document.getElementById('gatepassTableBody');
+      tbody.innerHTML = '';
+      data.gatepasses.forEach(g => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${g.id}</strong></td>
+          <td>${g.destination}</td>
+          <td>${g.out_time}</td>
+          <td>${g.return_time}</td>
+          <td><span class="badge-tag-good">${g.status}</span></td>
+          <td>
+            <button class="btn-pill-action" style="padding: 3px 8px; font-size: 0.72rem; color: var(--accent-red);" onclick="deleteGatepass('${g.id}')"><i class="fa-solid fa-trash"></i> Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function deleteGatepass(id) {
+      if (!confirm(`Delete gate pass ${id}?`)) return;
+      const res = await fetch(`/api/gatepasses/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        showAdminAlert(data.message);
+        loadGatepasses();
+      }
+    }
+
+    // Initialize
+    loadUsers();
+  </script>
+</body>
+</html>
